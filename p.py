@@ -19,9 +19,7 @@ st.set_page_config(
 )
 
 # --- DATABASE CONNECTION ---
-# Note: Ensure your local MySQL server is running
-try:
-
+# Note: Ensure your local MySQL server is runningtr
 db = mysql.connector.connect(
     host="STREAMLIT",
     user="YOUR_USER",
@@ -974,6 +972,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
