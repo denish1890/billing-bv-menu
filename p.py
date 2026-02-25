@@ -12,9 +12,9 @@ import os
 import time
 
 # --- INITIAL CONFIGURATION ---
-st.set_page_config((page_title="Jay Vachraj", layout="centered", initial_sidebar_state=="collapsed")
-    page_title="Admin Login · Company Portal",
-    page_icon="🔐",
+st.set_page_config(
+    st.set_page_config(
+    page_title="Jay Vachhraj",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
@@ -975,6 +975,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
