@@ -12,24 +12,25 @@ import os
 import time
 
 # --- INITIAL CONFIGURATION ---
-st.set_page_config(
+st.set_page_config(page_title="Jay Vachraj", layout="centered", initial_sidebar_state="collapsed"
     page_title="Admin Login · Company Portal",
     page_icon="🔐",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
+
 # --- DATABASE CONNECTION ---
 # Note: Ensure your local MySQL server is running
 try:
 
-db = mysql.connector.connect(
+#db = mysql.connector.connect(
     host="YOUR_HOST",
     user="YOUR_USER",
     password="YOUR_PASSWORD",
     database="YOUR_DATABASE",
     port=3306
 )
-cursor = db.cursor(dictionary=True)
+#cursor = db.cursor(dictionary=True)
 except Exception as e:
     st.error(f"Database Connection Failed: {e}")
     st.stop()
@@ -156,7 +157,6 @@ if st.session_state["page"] == "login":
     st.markdown('</div>', unsafe_allow_html=True)
 
 # --- 1. PAGE CONFIG & STYLING ---
-st.set_page_config(page_title="Jay Vachraj", layout="centered", initial_sidebar_state="collapsed")
 db_menu = []
 
 # Get all unique categories from the items fetched from DB
@@ -976,4 +976,3 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
-
