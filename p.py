@@ -18,7 +18,6 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed"
 )
-
 # --- DATABASE CONNECTION ---
 # Note: Ensure your local MySQL server is running
 try:
@@ -977,3 +976,4 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
