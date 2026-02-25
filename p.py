@@ -26,6 +26,7 @@ db = mysql.connector.connect(
     password="YOUR_PASSWORD",
     database="MYSQL",
     port=3306
+)
 cursor = db.cursor(dictionary=True)
 except Exception as e:
     st.error(f"Database Connection Failed: {e}")
@@ -972,6 +973,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
