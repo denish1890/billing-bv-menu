@@ -24,14 +24,14 @@ st.set_page_config(
 try:
    # --- DATABASE CONNECTION (TiDB Cloud) ---
     db = mysql.connector.connect(
-        host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
-        user="3mSr1JcCPJKrQSt.root",
-        password="xk9feq6Cx6ZaPnFQ",
-        database="cafe",
-        port=4000,
-        ssl_verify_identity=True,  # REQUIRED for TiDB
-        ssl_ca="/etc/ssl/certs/ca-certificates.crt" # Standard for Streamlit Cloud
-    )
+    host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
+    port=4000,
+    user= "4Er7E7yAa5CmneH.root", # Copy this from your TiDB dashboard
+    password "DMJB3xrkl616XBsS", # The password you set for the cluster
+    database="test",
+    ssl_verify_identity=True,
+    ssl_ca="/etc/ssl/certs/ca-certificates.crt" # This path is correct for Streamlit Cloud
+)
     cursor = db.cursor(dictionary=True)
 except Exception as e:
     st.error(f"TiDB Connection Failed: {e}")
@@ -979,6 +979,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
