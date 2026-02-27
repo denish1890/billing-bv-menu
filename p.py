@@ -467,7 +467,17 @@ if st.session_state["page"] == "menu":
     # Menu items display
     st.markdown("### 📋 OUR MENU · <span style='color: #a5512c; font-size: 14px;'>fresh & tasty</span>", 
                 unsafe_allow_html=True)
-    
+    cursor.execute(
+    "SELECT name, price, category FROM admin_requests WHERE company_name = %s AND status = 'Approved'", 
+    (st.session_state["menu_title"],)
+)
+menu_items = cursor.fetchall()
+
+if menu_items:
+    for item in menu_items:
+        st.write(f"🍴 **{item['name']}** — ₹{item['price']} ({item['category']})")
+else:
+    st.warning("No menu items found for this company.")
     # Category Filtering logic (based on your dynamic categories)
     # Filter logic based on selected category and search term
     # Filter and Flatten Logic
@@ -979,6 +989,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
