@@ -591,9 +591,9 @@ elif st.session_state["page"]== "cart":
  if not st.session_state["items"]:
      st.warning("Your Cart Is Empty!")
  
- for i in st.session_state["items"].copy():
-    idx = st.session_state["items"].index(i)
-    col1, col2, col3, col4 = st.columns([4,3,2,1])
+     for i in st.session_state["items"].copy():
+        idx = st.session_state["items"].index(i)
+        col1, col2, col3, col4 = st.columns([4,3,2,1])
 
    with col1:
         # Display image from session (PIL)
@@ -988,6 +988,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
