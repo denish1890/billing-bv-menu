@@ -34,9 +34,10 @@ try:
     )
     # This line must be indented exactly like 'db =' above it
     cursor = db.cursor(dictionary=True) 
+except Exception as e:
+    st.error(f"Database Connection Failed: {e}")
+    st.stop()
 
-except mysql.connector.Error as err:
-    print(f"Error: {err}")
 # --- DIRECTORIES ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_DIR = os.path.join(BASE_DIR, "menu_images")
@@ -139,7 +140,7 @@ if st.session_state["page"] == "login":
     
     if st.button("Login"):
         if company_input.strip():
-            cursor.execute(" SELECT email,company_name, online_payment_enabled FROM admin_requests WHERE LOWER(company_name) = LOWER(%s)", (company_input.strip(),))
+            cursor.execute("SELECT email, company_name, online_payment_enabled FROM admin_requests WHERE LOWER(company_name) = LOWER(%s)", (company_input.strip(),))
             admin_row = cursor.fetchone()
             
             if admin_row:
@@ -157,9 +158,9 @@ if st.session_state["page"] == "login":
             
     st.markdown('<div style="margin-top:20px; text-align:center; color:gray; font-size:0.8rem;">Demo Version</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
-    
+
 # --- 1. PAGE CONFIG & STYLING ---
-st.set_page_config(page_title="jay vacharaj", layout="centered", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Jay Vachraj", layout="centered", initial_sidebar_state="collapsed")
 db_menu = []
 
 # Get all unique categories from the items fetched from DB
@@ -467,17 +468,7 @@ if st.session_state["page"] == "menu":
     # Menu items display
     st.markdown("### 📋 OUR MENU · <span style='color: #a5512c; font-size: 14px;'>fresh & tasty</span>", 
                 unsafe_allow_html=True)
-    cursor.execute(
-    "SELECT name, price, category FROM admin_requests WHERE company_name = %s AND status = 'Approved'", 
-    (st.session_state["menu_title"],)
-)
-menu_items = cursor.fetchall()
-
-if menu_items:
-    for item in menu_items:
-        st.write(f"🍴 **{item['name']}** — ₹{item['price']} ({item['category']})")
-else:
-    st.warning("No menu items found for this company.")
+    
     # Category Filtering logic (based on your dynamic categories)
     # Filter logic based on selected category and search term
     # Filter and Flatten Logic
@@ -578,24 +569,25 @@ else:
 
     if total_qty > 0:
         if st.button(f"🛒 View Cart ({total_qty} items) · ₹{total_price}", use_container_width=True, type="primary"):
-           st.session_state["page"] = "cart":
-           st.rerun()
+            st.session_state["page"] = "cart"
+            st.rerun()
     else:
-         st.button("🛒 Cart is Empty", use_container_width=True, disabled=True)
+        st.button("🛒 Cart is Empty", use_container_width=True, disabled=True)
+        
     st.markdown('</div>', unsafe_allow_html=True)
-
-
+        
+    
 elif st.session_state["page"]== "cart":
  st.title("Your Cart")
  
  if not st.session_state["items"]:
      st.warning("Your Cart Is Empty!")
  
-     for i in st.session_state["items"].copy():
-        idx = st.session_state["items"].index(i)
-        col1, col2, col3, col4 = st.columns([4,3,2,1])
+ for i in st.session_state["items"].copy():
+    idx = st.session_state["items"].index(i)
+    col1, col2, col3, col4 = st.columns([4,3,2,1])
 
-   with col1:
+    with col1:
         # Display image from session (PIL)
         if i["image"]:
             img = load_image(i["image"])
@@ -603,7 +595,7 @@ elif st.session_state["page"]== "cart":
 
         else:
             st.image(Image.new("RGB", (60, 60), color=(200, 200, 200)))
-    
+
         st.write(f"**{i['item']}**")
 
     with col2:
@@ -988,30 +980,3 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
