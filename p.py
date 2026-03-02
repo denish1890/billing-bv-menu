@@ -176,9 +176,9 @@ if st.session_state.get("email"):
         SELECT id, name, image, variants, available, email
         FROM menu_items
         WHERE available=1 AND email=%s
-    """, (st.session_state["email"],))
+    """,st.write("DEBUG EMAIL:", st.session_state.get("email"))
     db_menu = cursor.fetchall()
-
+    st.write("DEBUG MENU:", db_menu)
 if st.session_state["page"] == "menu":
     # Custom CSS for styling
     st.markdown("""
@@ -979,5 +979,6 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
