@@ -27,21 +27,16 @@ if port is None:
     port = 3306
 else:
     port = int(port)
-try:
-    # --- DATABASE CONNECTION (TiDB Cloud) ---
-    db = mysql.connector.connect(
-    host=os.getenv("mysql.railway.internal"),
-    user=os.getenv("root"),
-    password=os.getenv("PNQPJXiWzVHdvjWgTeeCwnVJRclpCOjr"),
-    database=os.getenv("railway"),
-    port=port
-    )
-    # This line must be indented exactly like 'db =' above it
-    cursor = db.cursor(dictionary=True) 
-
-except mysql.connector.Error as err:
-    print(f"Error: {err}")
-    cursor = db.cursor(dictionary=True) 
+# --- DATABASE CONNECTION (TiDB Cloud) ---
+db = mysql.connector.connect(
+host=os.getenv("mysql.railway.internal"),
+user=os.getenv("root"),
+password=os.getenv("PNQPJXiWzVHdvjWgTeeCwnVJRclpCOjr"),
+database=os.getenv("railway"),
+port=port
+)
+# This line must be indented exactly like 'db =' above it
+cursor = db.cursor(dictionary=True)  
 # --- DIRECTORIES ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_DIR = os.path.join(BASE_DIR, "menu_images")
@@ -984,6 +979,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
