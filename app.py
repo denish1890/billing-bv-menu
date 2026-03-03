@@ -29,11 +29,11 @@ else:
     port = int(port)
 # --- DATABASE CONNECTION (TiDB Cloud) ---
 db = mysql.connector.connect(
-    host=os.getenv("MYSQLHOST"),
-    user=os.getenv("MYSQLUSER"),
-    password=os.getenv("oElgbmszcXZhAhUKZRwjOftvlynWjbsv"),
-    database=os.getenv("MYSQLDATABASE"),
-    port=port
+    host="mysql.railway.internal",
+    user="root",
+    password="PNQPJXiWzVHdvjWgTeeCwnVJRclpCOjr",
+    database="railway",
+    port=3306
 )
 # This line must be indented exactly like 'db =' above it
 cursor = db.cursor(dictionary=True)  
@@ -979,6 +979,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
