@@ -183,7 +183,7 @@ SELECT id, name, image, variants
 FROM menu_items
 WHERE available = 1
 AND is_active = 1
-AND email = %s
+AND company_name = %s
 """, (email,))
 
 db_menu = cursor.fetchall()
@@ -987,6 +987,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
