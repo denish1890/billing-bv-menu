@@ -172,25 +172,27 @@ categories = [{"id": "all", "label": "🍽️ All"}]
 for cat in db_categories:
     categories.append({"id": cat.lower(), "label": cat})
 
-email = st.session_state.get("email")
+if st.session_state["page"] == "menu":
 
-st.write("DEBUG EMAIL:", email)
+    email = st.session_state.get("email")
 
-cursor = db.cursor(dictionary=True)
+    cursor = db.cursor(dictionary=True)
 
-cursor.execute("""
-SELECT id, name, image, variants
-FROM menu_items
-WHERE available = 1
-AND is_active = 1
-AND company_name = %s
-""", (email,))
+    cursor.execute("""
+    SELECT id, name, image, variants
+    FROM menu_items
+    WHERE available = 1
+    AND is_active = 1
+    AND email = %s
+    """, (email,))
 
-db_menu = cursor.fetchall()
+    db_menu = cursor.fetchall()
 
-st.write("DEBUG MENU:", db_menu)
+    st.write("DEBUG MENU:", db_menu)
 
-if st.session_state["page"] == "menu":    # Custom CSS for styling
+    for item in db_menu:
+        st.write(item["name"])
+   # Custom CSS for styling
     st.markdown("""
     <style>
         /* Main container styling */
@@ -987,6 +989,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
