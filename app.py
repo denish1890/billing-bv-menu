@@ -182,7 +182,7 @@ SELECT id, name, image, variants, available, email
 FROM menu_items
 WHERE available=1 AND email=%s
 """, (email,))
-    db_menu = cursor.fetchall()
+   cursor = db.cursor(dictionary=True)
     st.write("DEBUG MENU:", db_menu)
 if st.session_state["page"] == "menu":
     # Custom CSS for styling
@@ -982,6 +982,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
