@@ -188,8 +188,6 @@ if st.session_state["page"] == "menu":
 
     db_menu = cursor.fetchall()
 
-    st.write("DEBUG MENU:", db_menu)
-
     for item in db_menu:
         st.write(item["name"])
    # Custom CSS for styling
@@ -989,6 +987,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
