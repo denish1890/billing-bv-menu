@@ -50,20 +50,24 @@ def load_image(image_path):
         return Image.new("RGB", (300, 300), (200, 200, 200))
 
     # If DB path is relative, resolve it
+    def load_image(image_path):
+    if not image_path:
+        return Image.new("RGB", (300, 300), (200, 200, 200))
+
     full_path = image_path
     if not os.path.isabs(image_path):
         full_path = os.path.join(BASE_DIR, image_path)
+
+    st.write(full_path)
+    st.write(os.path.exists(full_path))
 
     if os.path.exists(full_path):
         try:
             return Image.open(full_path)
         except:
             pass
-     st.write(full_path)
-     st.write(os.path.exists(full_path))
 
     return Image.new("RGB", (300, 300), (200, 200, 200))
-
 
 def get_today_order_number(cursor, db, email):
     today = datetime.now().date()
@@ -643,4 +647,5 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
