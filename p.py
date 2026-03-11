@@ -50,11 +50,12 @@ def load_image(image_path):
         return Image.new("RGB", (300, 300), (200, 200, 200))
 
     # If DB path is relative, resolve it
-    def load_image(image_path):
+   def load_image(image_path):
     if not image_path:
         return Image.new("RGB", (300, 300), (200, 200, 200))
 
     full_path = image_path
+
     if not os.path.isabs(image_path):
         full_path = os.path.join(BASE_DIR, image_path)
 
@@ -68,7 +69,6 @@ def load_image(image_path):
             pass
 
     return Image.new("RGB", (300, 300), (200, 200, 200))
-
 def get_today_order_number(cursor, db, email):
     today = datetime.now().date()
     cursor.execute("SELECT last_order_no FROM daily_order_counter WHERE order_date = %s AND email = %s FOR UPDATE", (today, email))
@@ -647,5 +647,6 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
