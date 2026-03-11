@@ -59,6 +59,8 @@ def load_image(image_path):
             return Image.open(full_path)
         except:
             pass
+     st.write(full_path)
+     st.write(os.path.exists(full_path))
 
     return Image.new("RGB", (300, 300), (200, 200, 200))
 
@@ -641,3 +643,4 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
