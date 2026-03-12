@@ -45,6 +45,20 @@ if "items" not in st.session_state:
 if "email" not in st.session_state:
     st.session_state["email"] = None
 
+def load_image(image_path):
+    if not image_path:
+        return Image.new("RGB", (300, 300), (200, 200, 200))
+
+    full_path = os.path.join(IMAGE_DIR, os.path.basename(image_path))
+
+    if os.path.exists(full_path):
+        try:
+            return Image.open(full_path)
+        except:
+            pass
+
+    return Image.new("RGB", (300, 300), (200, 200, 200))
+
 
 def get_today_order_number(cursor, db, email):
     today = datetime.now().date()
@@ -176,31 +190,31 @@ if st.session_state["page"] == "menu":
             
             import json
             variants = json.loads(item.get("variants") or "[]")
-        if not variants: variants = [{"name": "Standard", "price": 0}]
+            if not variants: variants = [{"name": "Standard", "price": 0}]
             
-    for v in variants:
+            for v in variants:
                 display_items.append({
                     "id": item["id"], "name": item["name"], "image": item["image"],
                     "v_name": v["name"], "v_price": v["price"]
                 })
 
     # --- 3. RENDER MENU ITEMS (Single Column - No Scroll) ---
-   # Updated display logic for your menu loop
     for item in display_items:
-       with st.container(border=True):
-        c1, c2 = st.columns([1, 2])
-        
-        with c1:
-                img_string = item["image"] # This is now the Base64 string from TiDB
+        # Each item gets its own container, creating a natural vertical list
+        with st.container(border=True):
+            c1, c2 = st.columns([1, 2])
             
-            if img_string and len(img_string) > 100: # Check if it's a valid string
-                # Display the string directly as an image
-               st.image(f"data:image/png;base64,{img_string}", use_container_width=True)
-            else:
-                # Fallback if no image exists
-                st.image("https://via.placeholder.com/150", caption="No Image", use_container_width=True)
+            with c1:
+                st.write("DB Image Path:", item["image"])
+
+                full_path = os.path.join(BASE_DIR, item["image"])
+                st.write("Server Path:", full_path)
+                st.write("File Exists:", os.path.exists(full_path))
+
+                img = load_image(item["image"])
+                st.image(img, use_container_width=True)
             
-        with c2:
+            with c2:
                 st.markdown(f"""
                     <div style="line-height: 1.2;">
                         <strong style="font-size: 14px;">{item['v_name']}</strong><br>
@@ -630,13 +644,6 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
-
-
-
-
-
-
-
 
 
 
