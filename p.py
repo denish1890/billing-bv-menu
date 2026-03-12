@@ -175,7 +175,7 @@ if st.session_state["page"] == "menu":
            (not search_query or search_query.lower() in item["name"].lower()):
             
             import json
-               variants = json.loads(item.get("variants") or "[]")
+            variants = json.loads(item.get("variants") or "[]")
         if not variants: variants = [{"name": "Standard", "price": 0}]
             
             for v in variants:
@@ -630,6 +630,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
