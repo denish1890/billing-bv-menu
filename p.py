@@ -178,7 +178,7 @@ if st.session_state["page"] == "menu":
             variants = json.loads(item.get("variants") or "[]")
         if not variants: variants = [{"name": "Standard", "price": 0}]
             
-            for v in variants:
+    for v in variants:
                 display_items.append({
                     "id": item["id"], "name": item["name"], "image": item["image"],
                     "v_name": v["name"], "v_price": v["price"]
@@ -630,6 +630,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
