@@ -190,7 +190,7 @@ if st.session_state["page"] == "menu":
             
             import json
             variants = json.loads(item.get("variants") or "[]")
-            if not variants: variants = [{"name": "Standard", "price": 0}]
+           if not variants: variants = [{"name": "Standard", "price": 0}]
             
             for v in variants:
                 display_items.append({
@@ -199,20 +199,20 @@ if st.session_state["page"] == "menu":
                 })
 
     # --- 3. RENDER MENU ITEMS (Single Column - No Scroll) ---
+   # Updated display logic for your menu loop
     for item in display_items:
-        # Each item gets its own container, creating a natural vertical list
-        with st.container(border=True):
-            c1, c2 = st.columns([1, 2])
+       with st.container(border=True):
+        c1, c2 = st.columns([1, 2])
+        
+        with c1:
+            img_string = item["image"] # This is now the Base64 string from TiDB
             
-            with c1:
-                st.write("DB Image Path:", item["image"])
-
-                full_path = os.path.join(BASE_DIR, item["image"])
-                st.write("Server Path:", full_path)
-                st.write("File Exists:", os.path.exists(full_path))
-
-                img = load_image(item["image"])
-                st.image(img, use_container_width=True)
+            if img_string and len(img_string) > 100: # Check if it's a valid string
+                # Display the string directly as an image
+                st.image(f"data:image/png;base64,{img_string}", use_container_width=True)
+            else:
+                # Fallback if no image exists
+                st.image("https://via.placeholder.com/150", caption="No Image", use_container_width=True)
             
             with c2:
                 st.markdown(f"""
@@ -644,5 +644,6 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
