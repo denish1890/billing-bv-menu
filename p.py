@@ -211,10 +211,8 @@ if st.session_state["page"] == "menu":
             with c1:
                 st.write("DB Image Path:", item["image"])
 
-                final_image_path = item["image"]
-                st.image(final_image_path, width=200)
-                st.write("Server Path:", full_path)
-                st.write("File Exists:", os.path.exists(full_path))
+                 final_image_path = item["image"]
+                 st.image(final_image_path, width=200)
 
                 img = load_image(item["image"])
                 st.image(img, use_container_width=True)
@@ -649,6 +647,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
