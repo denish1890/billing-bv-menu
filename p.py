@@ -277,7 +277,7 @@ elif st.session_state["page"] == "cart":
                 # We use 2 columns for the top row: Image + Details/Price
                 top_col1, top_col2 = st.columns([1, 3])
                 
-               with top_col1:
+              with top_col1:
                     # Use the URL directly from Cloudinary instead of calling load_image
                     cart_img = i.get("image") 
                     
@@ -287,7 +287,7 @@ elif st.session_state["page"] == "cart":
                         # This shows if the link is broken or missing
                         st.image("https://via.placeholder.com/100", use_container_width=True)
 
-                with top_col2:
+              with top_col2:
                     st.markdown(f"**{i['item']}**")
                     st.caption(f"Variant: {i['variant']} | Price: {i['price']}₹")
                 
@@ -646,6 +646,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
