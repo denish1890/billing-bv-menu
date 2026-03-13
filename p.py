@@ -32,10 +32,6 @@ db = mysql.connector.connect(
 )
 cursor = db.cursor(dictionary=True)
 
-# --- DIRECTORIES ---
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-IMAGE_DIR = os.path.join(BASE_DIR, "menu_images")
-os.makedirs(IMAGE_DIR, exist_ok=True)
 
 # --- SESSION STATE INITIALIZATION ---
 if "page" not in st.session_state:
@@ -45,9 +41,12 @@ if "items" not in st.session_state:
 if "email" not in st.session_state:
     st.session_state["email"] = None
 
-def load_image(image_path):
-    if not image_path:
-        return Image.new("RGB", (300, 300), (200, 200, 200))
+def load_image(image_url):
+    # If the URL is already a web link, just return it
+    if image_url and str(image_url).startswith("http"):
+        return image_url
+    # Fallback placeholder if there is no image
+    return "https://via.placeholder.com/300"
 
     full_path = os.path.join(IMAGE_DIR, os.path.basename(image_path))
 
@@ -278,11 +277,14 @@ elif st.session_state["page"] == "cart":
                 # We use 2 columns for the top row: Image + Details/Price
                 top_col1, top_col2 = st.columns([1, 3])
                 
-                with top_col1:
-                    if i["image"]:
-                        img = load_image(i["image"])
-                        st.image(img, use_container_width=True)
+               with top_col1:
+                    # Use the URL directly from Cloudinary instead of calling load_image
+                    cart_img = i.get("image") 
+                    
+                    if cart_img and str(cart_img).startswith("http"):
+                        st.image(cart_img, use_container_width=True)
                     else:
+                        # This shows if the link is broken or missing
                         st.image("https://via.placeholder.com/100", use_container_width=True)
 
                 with top_col2:
@@ -644,6 +646,7 @@ elif st.session_state["page"] == "downloadbill":
      pdf.output(file_name)
 
      st.success("Bill saved to your system!")
+
 
 
 
