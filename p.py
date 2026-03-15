@@ -493,8 +493,8 @@ if st.session_state["page"] == "menu":
     st.markdown('<div class="scrollable-menu">', unsafe_allow_html=True)
 
     # Grid Layout
-    for i in range(0, len(menu_to_show), 2):
-       cols = st.columns(2)
+   for i in range(0, len(menu_to_show), 2):
+    cols = st.columns(2)
 
     for j in range(2):
         if i + j < len(menu_to_show):
@@ -503,9 +503,9 @@ if st.session_state["page"] == "menu":
             price = item['active_variant_price']
             u_key = item['unique_key']
 
-            with cols[j]:
-                img_base64 = load_image(item["image"])
-
+           with cols[j]:
+                   st.write(item["image"])   # 🔍 Debug line
+                   img_base64 = load_image(item["image"])
                 with st.container(border=True):
                     st.markdown(f"""
                         <img src="data:image/png;base64,{img_base64}" class="custom-item-image">
