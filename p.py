@@ -494,41 +494,47 @@ if st.session_state["page"] == "menu":
 
     # Grid Layout
     for i in range(0, len(menu_to_show), 2):
-        cols = st.columns(2)
-        for j in range(2):
-            if i + j < len(menu_to_show):
-                item = menu_to_show[i + j]
-                v_name = item['active_variant_name']
-                price = item['active_variant_price']
-                u_key = item['unique_key'] # Use this for the key
+    cols = st.columns(2)
 
-                with cols[j]:
-                   img_url = load_image(item["image"])
+    for j in range(2):
+        if i + j < len(menu_to_show):
+            item = menu_to_show[i + j]
+            v_name = item['active_variant_name']
+            price = item['active_variant_price']
+            u_key = item['unique_key']
 
-                    with st.container(border=True):
-                        st.markdown(f"""
-                            <img src="data:image/png;base64,{img_base64}" class="custom-item-image">
-                            <div class="item-name"><strong>{v_name}</strong><br>
-                            <small style='color:gray;'>{item['name']}</small></div>
-                        """, unsafe_allow_html=True)
-    
-                        v_col1, v_col2 = st.columns([1, 1.2])
-                        with v_col1:
-                            st.markdown(f"<div class='item-price'>₹{price}</div>", unsafe_allow_html=True)
-                        
-                        with v_col2:
-                            existing_item = next((x for x in st.session_state["items"] 
-                                                if x["menu_id"] == item["id"] and x["variant"] == v_name), None)
-                            
-                            # Fix: Use unique_key to prevent duplicate widget ID errors
-                            qty = st.number_input(
-                                label="Qty",
-                                min_value=0, step=1,
-                                value=existing_item["quantity"] if existing_item else 0,
-                               key=f"qty_{item['id']}_{v_name}_{i}",
-                                label_visibility="collapsed"
-                            )
+            with cols[j]:
+                img_base64 = load_image(item["image"])
 
+                with st.container(border=True):
+                    st.markdown(f"""
+                        <img src="data:image/png;base64,{img_base64}" class="custom-item-image">
+                        <div class="item-name">
+                            <strong>{v_name}</strong><br>
+                            <small style='color:gray;'>{item['name']}</small>
+                        </div>
+                    """, unsafe_allow_html=True)
+
+                    v_col1, v_col2 = st.columns([1, 1.2])
+
+                    with v_col1:
+                        st.markdown(f"<div class='item-price'>₹{price}</div>", unsafe_allow_html=True)
+
+                    with v_col2:
+                        existing_item = next(
+                            (x for x in st.session_state["items"]
+                             if x["menu_id"] == item["id"] and x["variant"] == v_name),
+                            None
+                        )
+
+                        qty = st.number_input(
+                            label="Qty",
+                            min_value=0,
+                            step=1,
+                            value=existing_item["quantity"] if existing_item else 0,
+                            key=f"qty_{item['id']}_{v_name}_{i}",
+                            label_visibility="collapsed"
+                        )
                         # Update Cart Logic
                         if qty > 0:
                             if existing_item:
