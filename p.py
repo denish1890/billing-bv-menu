@@ -496,7 +496,7 @@ if st.session_state["page"] == "menu":
    for i in range(0, len(menu_to_show), 2):
        cols = st.columns(2)
 
-    for j in range(2):
+     for j in range(2):
         if i + j < len(menu_to_show):
             item = menu_to_show[i + j]
             v_name = item['active_variant_name']
